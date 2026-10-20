@@ -1,8 +1,7 @@
-FROM python:3.12-slim 
-## מגדיר לו באיזה מערכת הפעלה להתשמש ובאיזה גרסת פיתון
-WORKDIR /app 
-## יצרנו תיקיה חדשה בתוך הקונטינר שכל הפקודות הבאות ירוצו בתוכה
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-## תעתיק את כל מה שיש במחשב שלי לקונטינר
-CMD ["python", "app.py"] 
-## הפקודה שתתבצע כאשר נריץ את הקונטינר
+EXPOSE 8080
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
